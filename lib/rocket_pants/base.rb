@@ -15,7 +15,6 @@ module RocketPants
     end
 
     MODULES = [
-      ActionController::HideActions,
       ActionController::UrlFor,
       ActionController::Redirecting,
       ActionController::ConditionalGet,
@@ -39,7 +38,11 @@ module RocketPants
       StrongParameters,
       Instrumentation
       # FormatVerification # TODO: Implement Format Verification
-    ].compact
+    ]
+
+    MODULES << ActionController::HideActions if ActionPack::VERSION::MAJOR < 5
+
+    MODULES.compact!
 
     # If possible, include the Rails controller methods in Airbrake to make it useful.
     begin
